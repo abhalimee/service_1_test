@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abdullah's Fastly Test</title>
+    <style>
+        body {
+            font-family: -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .fastly { color: #ff282d; }
+        .github { color: #333; }
+    </style>
 </head>
 <body>
-    <h1>Hello from behind Fastly! 🚀</h1>
-    <p>This page is served via GitHub Pages through Fastly's CDN.</p>
-    <p>Service: ahlimee_service_1.global.ssl.fastly.net</p>
+    <div class="card">
+        <h1 id="heading">Detecting...</h1>
+        <p id="message"></p>
+        <p><small id="details"></small></p>
+    </div>
+
+    <script>
+        const hostname = window.location.hostname;
+
+        if (hostname.includes('global.ssl.fastly.net') || hostname.includes('fastly')) {
+            document.getElementById('heading').innerHTML = '🚀 Served from <span class="fastly">Fastly</span>';
+            document.getElementById('message').textContent = 'This page is being delivered through Fastly\'s CDN edge network.';
+            document.getElementById('details').textContent = 'Host: ' + hostname;
+        } else if (hostname.includes('github.io')) {
+            document.getElementById('heading').innerHTML = '🐙 Served from <span class="github">GitHub Pages</span>';
+            document.getElementById('message').textContent = 'This page is being served directly from GitHub Pages.';
+            document.getElementById('details').textContent = 'Host: ' + hostname;
+        } else {
+            document.getElementById('heading').textContent = '🌐 Served from: ' + hostname;
+            document.getElementById('message').textContent = 'Unknown origin.';
+        }
+    </script>
 </body>
 </html>
